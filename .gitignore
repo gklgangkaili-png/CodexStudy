@@ -1,0 +1,25 @@
+# Local demonstrations and generated task bundles
+/recordings/
+/tasks/
+/.game-demo-task-library.json
+
+# Python
+/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Build and packaging output
+/build/
+/dist/
+
+# Local editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local command-line tools
+/.tools/
