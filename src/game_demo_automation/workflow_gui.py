@@ -491,19 +491,23 @@ def main() -> None:
             worker.message.connect(self.append_log)
             worker.completed.connect(self.execution_completed)
             worker.failed.connect(self.execution_failed)
+            worker.finished.connect(self.execution_worker_finished)
             self.worker = worker
             self.execute_button.setEnabled(False)
             worker.start()
 
         def execution_completed(self, detail: str) -> None:
             self.append_log(f"Maa 执行结束：{detail}")
-            self.worker = None
-            self.update_execute_state()
 
         def execution_failed(self, detail: str) -> None:
             self.append_log(detail)
             QMessageBox.critical(self, "Maa 执行失败", detail.splitlines()[-1])
+
+        def execution_worker_finished(self) -> None:
+            worker = self.worker
             self.worker = None
+            if worker is not None:
+                worker.deleteLater()
             self.update_execute_state()
 
     app = QApplication(sys.argv)
