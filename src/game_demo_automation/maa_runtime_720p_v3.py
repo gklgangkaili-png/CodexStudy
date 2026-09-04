@@ -7,6 +7,11 @@ from . import maa_runtime
 from .models import WindowIdentity
 
 
+def foreground_screencap_method(methods: Any) -> Any:
+    """Use ScreenDC directly so each loop does not probe failing DXGI duplication."""
+    return methods.ScreenDC
+
+
 def require_maa_720p(controller: Any) -> None:
     if not controller.set_screenshot_use_raw_size(False):
         raise RuntimeError("MaaFramework 无法关闭原始截图，已安全暂停")
@@ -33,7 +38,7 @@ class Maa720pForegroundRunner(maa_runtime.MaaForegroundRunner):
             raise RuntimeError("；".join(errors))
         controller = Win32Controller(
             hWnd=selected.hwnd,
-            screencap_method=MaaWin32ScreencapMethodEnum.Foreground,
+            screencap_method=foreground_screencap_method(MaaWin32ScreencapMethodEnum),
             mouse_method=MaaWin32InputMethodEnum.LegacyEvent,
             keyboard_method=MaaWin32InputMethodEnum.LegacyEvent,
         )
@@ -52,4 +57,3 @@ class Maa720pForegroundRunner(maa_runtime.MaaForegroundRunner):
                 self.tasker.post_stop().wait()
         with maa_runtime.EmergencyStopHotkey(stop, 0x7B):
             job = self.tasker.post_task(entry); job.wait(); return job.get()
-
