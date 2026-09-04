@@ -37,7 +37,7 @@ py -m pip install -e ".[dev,ui,maa]"
 在仓库根目录运行：
 
 ```powershell
-py -m game_demo_automation.workflow_gui_safe_v19
+py app_launcher.py
 ```
 
 启动时选择录制比例：
@@ -93,5 +93,6 @@ game-demo compile path\to\demonstration.json path\to\task-bundle
 ```powershell
 game-demo-simulator
 ```
+
 
 
