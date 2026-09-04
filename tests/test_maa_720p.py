@@ -1,4 +1,5 @@
 from game_demo_automation.maa_runtime_720p_v3 import (
+    foreground_input_method,
     foreground_screencap_method,
     require_maa_720p,
 )
@@ -21,3 +22,10 @@ def test_foreground_screencap_uses_screendc_without_dxgi_fallback_noise():
         Foreground = object()
 
     assert foreground_screencap_method(FakeMethods) is FakeMethods.ScreenDC
+
+def test_foreground_input_uses_high_compatibility_seize():
+    class FakeMethods:
+        Seize = object()
+        LegacyEvent = object()
+
+    assert foreground_input_method(FakeMethods) is FakeMethods.Seize

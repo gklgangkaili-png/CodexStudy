@@ -7,3 +7,8 @@ def test_f11_cancellation_blocks_immediate_next_loop(monkeypatch) -> None:
     assert module.loop_cancelled_recently()
     monkeypatch.setattr(module.time, "monotonic", lambda: 106.0)
     assert not module.loop_cancelled_recently()
+
+def test_loop_runner_uses_high_compatibility_foreground_runner():
+    from game_demo_automation.maa_runtime_720p_v3 import Maa720pForegroundRunner
+
+    assert Maa720pForegroundRunner in module.LoopAwareMaaRunner.__bases__

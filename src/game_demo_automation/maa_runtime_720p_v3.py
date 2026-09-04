@@ -12,6 +12,11 @@ def foreground_screencap_method(methods: Any) -> Any:
     return methods.ScreenDC
 
 
+def foreground_input_method(methods: Any) -> Any:
+    """Use Maa's highest-compatibility foreground input backend."""
+    return methods.Seize
+
+
 def require_maa_720p(controller: Any) -> None:
     if not controller.set_screenshot_use_raw_size(False):
         raise RuntimeError("MaaFramework 无法关闭原始截图，已安全暂停")
@@ -39,8 +44,8 @@ class Maa720pForegroundRunner(maa_runtime.MaaForegroundRunner):
         controller = Win32Controller(
             hWnd=selected.hwnd,
             screencap_method=foreground_screencap_method(MaaWin32ScreencapMethodEnum),
-            mouse_method=MaaWin32InputMethodEnum.LegacyEvent,
-            keyboard_method=MaaWin32InputMethodEnum.LegacyEvent,
+            mouse_method=foreground_input_method(MaaWin32InputMethodEnum),
+            keyboard_method=foreground_input_method(MaaWin32InputMethodEnum),
         )
         require_maa_720p(controller)
         connection = controller.post_connection(); connection.wait()

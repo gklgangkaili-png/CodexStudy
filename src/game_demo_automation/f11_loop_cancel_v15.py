@@ -3,9 +3,8 @@ from __future__ import annotations
 import time
 from typing import Any
 
-from .maa_runtime_legacy_v4 import MaaLegacyForegroundRunner
+from .maa_runtime_720p_v3 import Maa720pForegroundRunner
 from .shared_f11_emergency_stop_v14 import SharedF11EmergencyStop
-
 
 _cancelled_at = 0.0
 CANCEL_WINDOW_SECONDS = 5.0
@@ -29,7 +28,7 @@ class LoopAwareF11EmergencyStop(SharedF11EmergencyStop):
         super().__init__(cancel_and_stop, virtual_key)
 
 
-class LoopAwareMaaRunner(MaaLegacyForegroundRunner):
+class LoopAwareMaaRunner(Maa720pForegroundRunner):
     def run(self, *args: Any, **kwargs: Any) -> Any:
         if loop_cancelled_recently():
             return {"cancelled_by_f11": True}
